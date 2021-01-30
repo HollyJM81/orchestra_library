@@ -18,7 +18,7 @@ CI System: GitHub Actions
 ### Backend
 - Build the project: `cd backend && ./gradlew assemble` (initial run will be slow) OR use the Gradle window in IDEA
 - Run the application: use the gradle bootRun task and visit https://localhost:8080/composers. 
-The username is `user` and the password will be generated on the console. 
+The credentials are found in `/backend/application.properties`. 
 
 ## Resources
 - [Getting Started with Spring Boot](https://spring.io/guides/gs/spring-boot/)
