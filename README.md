@@ -10,8 +10,10 @@ CI System: GitHub Actions
 ## Prerequisites (delete if empty)
 - Java 8 or higher
 - Kotlin 1.4 or higher
+- Node 12 or higher
 
 ## Development Instructions
+- install the pre-commit hook: `npm i`
 
 ### Backend
 - Build the project: `cd backend && ./gradlew assemble` (initial run will be slow) OR use the Gradle window in IDEA
