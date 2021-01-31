@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: orchestra-lib-artifact
-          path: $HOME/orchestra-library/backend/build/
+          path: $HOME/work/orchestra_library/orchestra-library/backend/build/
       - name: Test with Gradle
         run: ./gradlew test
 
