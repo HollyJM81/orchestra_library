@@ -1,0 +1,27 @@
+{
+  "name": "orchestra_library",
+  "version": "1.0.0",
+  "description": "Orchestral library database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HollyJM81/orchestra_library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HollyJM81/orchestra_library/issues"
+  },
+  "homepage": "https://github.com/HollyJM81/orchestra_library#readme",
+  "dependencies": {
+    "husky": "^4.3.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cd backend && ./gradlew ktlintcheck"
+    }
+  }
+}
