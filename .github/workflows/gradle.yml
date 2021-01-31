@@ -27,11 +27,13 @@ jobs:
         run: ./gradlew ktlintcheck
       - name: Assemble with Gradle
         run: ./gradlew assemble
+      - name: Print Home
+        run: echo $HOME
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
         with:
           name: orchestra-lib-artifact
-          path: build/
+          path: $HOME/orchestra-library/backend/build/
       - name: Test with Gradle
         run: ./gradlew test
 
