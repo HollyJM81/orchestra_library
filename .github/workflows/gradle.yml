@@ -27,13 +27,11 @@ jobs:
         run: ./gradlew ktlintcheck
       - name: Assemble with Gradle
         run: ./gradlew assemble
-      - name: Create artifact directories
-        run: mkdir -p path/to/artifact
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
         with:
           name: orchestra-lib-artifact
-          path: path/to/artifact/
+          path: build/
       - name: Test with Gradle
         run: ./gradlew test
 
