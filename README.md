@@ -8,7 +8,7 @@ Database: Postgres
 CI System: GitHub Actions
 
 ## Prerequisites (delete if empty)
-- Java 8 or higher
+- Java 11 or higher
 - Kotlin 1.4 or higher
 - Node 12 or higher
 

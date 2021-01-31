@@ -31,10 +31,6 @@ jobs:
         run: echo $HOME
       - name: Test with Gradle
         run: ./gradlew test
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: orchestra-lib-artifact
-          path: /home/runner/work/orchestra-library/backend/build/
+
 
 
