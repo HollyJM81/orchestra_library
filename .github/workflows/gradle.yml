@@ -28,4 +28,4 @@ jobs:
       - name: Assemble with Gradle
         run: ./gradlew assemble
       - name: Test with Gradle
-        run: ./gradlew test --stacktrace
+        run: ./gradlew test
