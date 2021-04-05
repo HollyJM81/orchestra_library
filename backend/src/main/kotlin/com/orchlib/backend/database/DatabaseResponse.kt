@@ -1,11 +1,7 @@
 package com.orchlib.backend.database
 
-data class DatabaseResponse(
-    val databaseResponse: DatabaseResponseType,
-    val id: Int? = null,
-    val message: String? = null
-)
+interface DatabaseResponse
 
-enum class DatabaseResponseType {
-    SUCCESS, FAILURE
-}
+data class AddSuccess(val id: Int) : DatabaseResponse
+
+data class AddFailure(val message: String = "Error inserting into database.") : DatabaseResponse

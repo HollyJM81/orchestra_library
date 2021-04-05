@@ -10,20 +10,14 @@ class ComposerDAO {
         jdbcTemplate = dataSource?.let { JdbcTemplate(it) }
     }
 
-    fun getCountOfComposers(): Int {
-        return jdbcTemplate?.queryForObject("SELECT COUNT(*) FROM COMPOSER", Int::class.java)!!
-    }
-
-    fun add() {
-//        transaction {
-//            addLogger(StdOutSqlLogger)
-//            SchemaUtils.create(ComposerDTO)
-//            composerDTO.insert { record ->
-//                record[last_name] = composerDTO.last_name
-//                record[middle_name] = composerDTO.middle_name
-//                record[first_name] = composerDTO.first_name
-//                record[date_of_birth] = composerDTO.date_of_birth
-//            }
-//        }
+    fun add(composerDTO: ComposerDTO): DatabaseResponse {
+        val id: Int? = jdbcTemplate?.update(
+            "insert into COMPOSER (last_name, first_name, date_of_birth) values(?, ?, ?)",
+            composerDTO.last_name,
+            composerDTO.first_name,
+            composerDTO.date_of_birth
+        )
+        return if (id != null) { AddSuccess(id = id) } else
+            AddFailure("Error inserting composer with last name ${composerDTO.last_name} into database.")
     }
 }
