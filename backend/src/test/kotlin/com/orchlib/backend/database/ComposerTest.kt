@@ -9,12 +9,13 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.jdbc.core.JdbcTemplate
 import java.lang.RuntimeException
+import java.sql.Date
 
 class ComposerTest {
     private val composerToAdd = ComposerDTO(
         last_name = "Mendelssohn",
         first_name = "Fanny",
-        date_of_birth = "2020-01-31"
+        date_of_birth = Date.valueOf("2020-01-31")
     )
     private lateinit var mockJdbcTemplate: JdbcTemplate
     private lateinit var composerDAO: ComposerDAO

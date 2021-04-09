@@ -44,6 +44,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.+")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("io.r2dbc:r2dbc-h2")
     runtimeOnly("io.r2dbc:r2dbc-postgresql")
