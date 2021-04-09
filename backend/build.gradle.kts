@@ -16,6 +16,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 repositories {
     mavenCentral()
     maven { url = uri("https://repo.spring.io/milestone") }
+    jcenter()
 }
 
 extra["snippetsDir"] = file("build/generated-snippets")
@@ -55,6 +56,7 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:r2dbc")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.1.0")
 }
 
 dependencyManagement {
