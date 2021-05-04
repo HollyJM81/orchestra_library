@@ -3,7 +3,6 @@ package com.orchlib.backend.database
 import junit.framework.Assert.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
@@ -28,19 +27,31 @@ class ComposerTest {
 
     @Test
     fun `add composer returns success`() {
-        val id = 0
-        whenever(mockJdbcTemplate.update(any(), any(), any(), any())).thenReturn(id)
+        val numberOfRowsAffected = 1
+        whenever(mockJdbcTemplate.update(
+            any(),
+            any(),
+            any(),
+            any(),
+            any()
+        )).thenReturn(numberOfRowsAffected)
         val actual = composerDAO.add(composerToAdd)
-        val expected = AddSuccess(id = id)
+        val expected = buildAddSuccess(numberOfRowsAffected)
         assertEquals(expected, actual)
     }
 
     @Test
     fun `add composer returns failure`() {
-        val errorMessage = "Error inserting composer with last name Mendelssohn into database."
-        val exception = RuntimeException(errorMessage)
-        whenever(mockJdbcTemplate.update(any(), any(), any(), any())).thenThrow(exception)
-        val exceptionThrown = assertThrows<RuntimeException> { composerDAO.add(composerToAdd) }
-        assertEquals(exceptionThrown.message, exception.message)
+        val exception = RuntimeException("message")
+        whenever(mockJdbcTemplate.update(
+            any(),
+            any(),
+            any(),
+            any(),
+            any()
+        )).thenThrow(exception)
+        val actual = composerDAO.add(composerToAdd)
+        val expected = buildAddFailure(composerToAdd.last_name)
+        assertEquals(expected, actual)
     }
 }

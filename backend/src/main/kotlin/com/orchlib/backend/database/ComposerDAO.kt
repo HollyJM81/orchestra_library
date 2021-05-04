@@ -4,15 +4,20 @@ import org.springframework.jdbc.core.JdbcTemplate
 
 class ComposerDAO(private val jdbcTemplate: JdbcTemplate) {
     fun add(composerDTO: ComposerDTO): DatabaseResponse {
-        createComposerTableIfNotExists()
-        val id: Int = jdbcTemplate.update(
-            "insert into COMPOSER (last_name, middle_name, first_name, date_of_birth) values(?, ?, ?, ?)",
-            composerDTO.last_name,
-            composerDTO.middle_name,
-            composerDTO.first_name,
-            composerDTO.date_of_birth
-        )
-        return AddSuccess(id = id)
+        val numberOfRowsAffected: Int = try {
+            createComposerTableIfNotExists()
+            jdbcTemplate.update(
+                "insert into COMPOSER (last_name, middle_name, first_name, date_of_birth) values(?, ?, ?, ?)",
+                composerDTO.last_name,
+                composerDTO.middle_name,
+                composerDTO.first_name,
+                composerDTO.date_of_birth
+            )
+        } catch (exception: Exception) {
+            return buildAddFailure(composerDTO.last_name)
+        }
+
+        return buildAddSuccess(numberOfRowsAffected)
     }
 
     private fun createComposerTableIfNotExists() {
