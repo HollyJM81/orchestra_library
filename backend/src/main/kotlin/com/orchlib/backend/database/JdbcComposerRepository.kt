@@ -1,18 +1,26 @@
 package com.orchlib.backend.database
 
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.stereotype.Repository
 
-class JdbcComposerRepository(private val jdbcTemplate: JdbcTemplate) : ComposerRepository {
+@Repository
+class JdbcComposerRepository(
+    private val jdbcTemplate: JdbcTemplate,
+    private val composerRowMapper: ComposerRowMapper
+) : ComposerRepository {
+
+    override fun findOne(id: Int): ComposerDTO? {
+        return jdbcTemplate.queryForObject(
+            "select * from Composer where id=?",
+            composerRowMapper,
+            id
+        )
+    }
+
     override fun save(composerDTO: ComposerDTO): DatabaseWriteResponse {
         val numberOfRowsAffected: Int = try {
             createComposerTableIfNotExists()
-            jdbcTemplate.update(
-                "insert into COMPOSER (last_name, middle_name, first_name, date_of_birth) values(?, ?, ?, ?)",
-                composerDTO.last_name,
-                composerDTO.middle_name,
-                composerDTO.first_name,
-                composerDTO.date_of_birth
-            )
+            insertComposer(composerDTO)
         } catch (exception: Exception) {
             return buildAddFailure(composerDTO.last_name, "composer")
         }
@@ -32,8 +40,14 @@ class JdbcComposerRepository(private val jdbcTemplate: JdbcTemplate) : ComposerR
         )
     }
 
-    override fun findOne(): ComposerDTO {
-        TODO("Not yet implemented")
+    private fun insertComposer(composerDTO: ComposerDTO): Int {
+        return jdbcTemplate.update(
+            "insert into COMPOSER (last_name, middle_name, first_name, date_of_birth) values(?, ?, ?, ?)",
+            composerDTO.last_name,
+            composerDTO.middle_name,
+            composerDTO.first_name,
+            composerDTO.date_of_birth
+        )
     }
 
     override fun findAll(): ComposerDTO {
