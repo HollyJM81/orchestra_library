@@ -1,6 +1,6 @@
 package com.orchlib.backend
 
-import com.orchlib.backend.database.ComposerDAO
+import com.orchlib.backend.database.JdbcComposerRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 
 class AppConfig {
     @Bean
-    fun autowiredFieldDependency(): ComposerDAO {
-        return ComposerDAO(JdbcTemplate())
+    fun autowiredFieldDependency(): JdbcComposerRepository {
+        return JdbcComposerRepository(JdbcTemplate())
     }
 }

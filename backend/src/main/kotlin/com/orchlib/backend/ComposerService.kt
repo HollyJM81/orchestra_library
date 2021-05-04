@@ -1,18 +1,18 @@
 package com.orchlib.backend
 
-import com.orchlib.backend.database.ComposerDAO
+import com.orchlib.backend.database.JdbcComposerRepository
 import com.orchlib.backend.database.ComposerDTO
-import com.orchlib.backend.database.DatabaseResponse
+import com.orchlib.backend.database.DatabaseWriteResponse
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 
 class ComposerService(
-    private val composerDAO: ComposerDAO,
+    private val composerDAO: JdbcComposerRepository,
     private val jdbcTemplate: JdbcTemplate
 ) {
-    fun add(composer: ComposerDTO): DatabaseResponse {
+    fun add(composer: ComposerDTO): DatabaseWriteResponse {
         setDataSourceHackily()
-        return composerDAO.add(composer)
+        return composerDAO.save(composer)
     }
 
     private fun setDataSourceHackily() {

@@ -10,48 +10,51 @@ import org.springframework.jdbc.core.JdbcTemplate
 import java.lang.RuntimeException
 import java.sql.Date
 
-class ComposerTest {
+class JdbcComposerTest {
     private val composerToAdd = ComposerDTO(
         last_name = "Mendelssohn",
         first_name = "Fanny",
         date_of_birth = Date.valueOf("2020-01-31")
     )
     private lateinit var mockJdbcTemplate: JdbcTemplate
-    private lateinit var composerDAO: ComposerDAO
+    private lateinit var composerDAO: JdbcComposerRepository
 
     @BeforeEach
     fun setUp() {
         mockJdbcTemplate = mock()
-        composerDAO = ComposerDAO(mockJdbcTemplate)
+        composerDAO = JdbcComposerRepository(mockJdbcTemplate)
     }
 
     @Test
-    fun `add composer returns success`() {
+    fun `save composer success`() {
         val numberOfRowsAffected = 1
-        whenever(mockJdbcTemplate.update(
-            any(),
-            any(),
-            any(),
-            any(),
-            any()
-        )).thenReturn(numberOfRowsAffected)
-        val actual = composerDAO.add(composerToAdd)
+        whenever(
+            mockJdbcTemplate.update(
+                any(),
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        ).thenReturn(numberOfRowsAffected)
+        val actual = composerDAO.save(composerToAdd)
         val expected = buildAddSuccess(numberOfRowsAffected)
         assertEquals(expected, actual)
     }
 
     @Test
-    fun `add composer returns failure`() {
-        val exception = RuntimeException("message")
-        whenever(mockJdbcTemplate.update(
-            any(),
-            any(),
-            any(),
-            any(),
-            any()
-        )).thenThrow(exception)
-        val actual = composerDAO.add(composerToAdd)
-        val expected = buildAddFailure(composerToAdd.last_name)
+    fun `save composer failure`() {
+        whenever(
+            mockJdbcTemplate.update(
+                any(),
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        ).thenThrow(RuntimeException("message"))
+        val actual = composerDAO.save(composerToAdd)
+        val expected = buildAddFailure(composerToAdd.last_name, "composer")
         assertEquals(expected, actual)
     }
 }

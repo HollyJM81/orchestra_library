@@ -9,4 +9,4 @@ data class ComposerDTO(
     val middle_name: String? = null,
     val first_name: String,
     val date_of_birth: Date
-): DTO
+) : DTO

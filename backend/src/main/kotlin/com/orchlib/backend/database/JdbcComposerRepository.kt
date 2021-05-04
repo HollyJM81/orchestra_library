@@ -2,8 +2,8 @@ package com.orchlib.backend.database
 
 import org.springframework.jdbc.core.JdbcTemplate
 
-class ComposerDAO(private val jdbcTemplate: JdbcTemplate) {
-    fun add(composerDTO: ComposerDTO): DatabaseResponse {
+class JdbcComposerRepository(private val jdbcTemplate: JdbcTemplate) : ComposerRepository {
+    override fun save(composerDTO: ComposerDTO): DatabaseWriteResponse {
         val numberOfRowsAffected: Int = try {
             createComposerTableIfNotExists()
             jdbcTemplate.update(
@@ -14,9 +14,8 @@ class ComposerDAO(private val jdbcTemplate: JdbcTemplate) {
                 composerDTO.date_of_birth
             )
         } catch (exception: Exception) {
-            return buildAddFailure(composerDTO.last_name)
+            return buildAddFailure(composerDTO.last_name, "composer")
         }
-
         return buildAddSuccess(numberOfRowsAffected)
     }
 
@@ -31,5 +30,13 @@ class ComposerDAO(private val jdbcTemplate: JdbcTemplate) {
                 "    DATE_OF_BIRTH date\n" +
                 ");"
         )
+    }
+
+    override fun findOne(): ComposerDTO {
+        TODO("Not yet implemented")
+    }
+
+    override fun findAll(): ComposerDTO {
+        TODO("Not yet implemented")
     }
 }

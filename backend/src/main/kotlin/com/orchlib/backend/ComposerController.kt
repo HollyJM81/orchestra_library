@@ -1,9 +1,9 @@
 package com.orchlib.backend
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.orchlib.backend.database.ComposerDAO
+import com.orchlib.backend.database.JdbcComposerRepository
 import com.orchlib.backend.database.ComposerDTO
-import com.orchlib.backend.database.DatabaseResponse
+import com.orchlib.backend.database.DatabaseWriteResponse
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -20,7 +20,7 @@ private fun toComposerDTO(requestBody: String): ComposerDTO {
 @RestController
 class ComposerController {
     private final val jdbcTemplate = JdbcTemplate()
-    private final val composerDAO = ComposerDAO(jdbcTemplate)
+    private final val composerDAO = JdbcComposerRepository(jdbcTemplate)
     val composerService = ComposerService(composerDAO, jdbcTemplate)
 
     @GetMapping
@@ -34,7 +34,7 @@ class ComposerController {
         consumes = ["application/json"],
         produces = ["application/json"]
     )
-    fun createComposer(@RequestBody composer: String): DatabaseResponse {
+    fun createComposer(@RequestBody composer: String): DatabaseWriteResponse {
         return composerService.add(toComposerDTO(composer))
     }
 }
