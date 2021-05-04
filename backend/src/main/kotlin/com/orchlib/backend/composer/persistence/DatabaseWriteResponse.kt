@@ -1,4 +1,4 @@
-package com.orchlib.backend.database
+package com.orchlib.backend.composer.persistence
 
 interface DatabaseWriteResponse
 

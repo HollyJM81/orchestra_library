@@ -1,5 +1,6 @@
-package com.orchlib.backend.database
+package com.orchlib.backend.composer.persistence
 
+import com.orchlib.backend.composer.ComposerDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository

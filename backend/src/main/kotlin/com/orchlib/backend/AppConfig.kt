@@ -1,6 +1,6 @@
 package com.orchlib.backend
 
-import com.orchlib.backend.database.ComposerRowMapper
+import com.orchlib.backend.composer.persistence.ComposerRowMapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan

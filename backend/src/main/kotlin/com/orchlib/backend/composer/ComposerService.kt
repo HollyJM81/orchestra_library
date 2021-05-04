@@ -1,8 +1,8 @@
 package com.orchlib.backend
 
-import com.orchlib.backend.database.ComposerDTO
-import com.orchlib.backend.database.DatabaseWriteResponse
-import com.orchlib.backend.database.JdbcComposerRepository
+import com.orchlib.backend.composer.ComposerDTO
+import com.orchlib.backend.composer.persistence.DatabaseWriteResponse
+import com.orchlib.backend.composer.persistence.JdbcComposerRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

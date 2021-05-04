@@ -1,13 +1,12 @@
-package com.orchlib.backend
+package com.orchlib.backend.composer
 
-import com.orchlib.backend.database.ComposerDTO
-import com.orchlib.backend.database.JdbcComposerRepository
-import com.orchlib.backend.database.buildAddFailure
-import com.orchlib.backend.database.buildAddSuccess
+import com.orchlib.backend.ComposerService
+import com.orchlib.backend.composer.persistence.JdbcComposerRepository
+import com.orchlib.backend.composer.persistence.buildAddFailure
+import com.orchlib.backend.composer.persistence.buildAddSuccess
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,12 +16,10 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit4.SpringRunner
 import java.sql.Date
 
 @ActiveProfiles("ComposerServiceTest")
-@RunWith(SpringRunner::class)
-@SpringBootTest(classes = [TestApplication::class])
+@SpringBootTest
 
 class ComposerServiceTest {
     @Autowired
@@ -57,10 +54,12 @@ class ComposerServiceTest {
 
         @Test
         fun `findAll returns list of composers`() {
-            whenever(mockJdbcComposerRepository.findAll()).thenReturn(listOf(
-                composerDTO,
-                composerDTOHildegard
-            ))
+            whenever(mockJdbcComposerRepository.findAll()).thenReturn(
+                listOf(
+                    composerDTO,
+                    composerDTOHildegard
+                )
+            )
             val expected = listOf(composerDTO, composerDTOHildegard)
             val actual = composerService.findAll()
             assertThat(actual).isEqualTo(expected)

@@ -1,4 +1,6 @@
-package com.orchlib.backend.database
+package com.orchlib.backend.composer.persistence
+
+import com.orchlib.backend.composer.ComposerDTO
 
 interface ComposerRepository {
     fun findAll(): List<ComposerDTO>

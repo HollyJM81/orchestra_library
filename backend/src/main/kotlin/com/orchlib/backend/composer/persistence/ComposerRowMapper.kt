@@ -1,5 +1,6 @@
-package com.orchlib.backend.database
+package com.orchlib.backend.composer.persistence
 
+import com.orchlib.backend.composer.ComposerDTO
 import org.springframework.jdbc.core.RowMapper
 import java.sql.Date
 import java.sql.ResultSet

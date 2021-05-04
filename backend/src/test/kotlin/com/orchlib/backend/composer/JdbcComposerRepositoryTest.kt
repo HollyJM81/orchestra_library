@@ -1,10 +1,12 @@
-package com.orchlib.backend.database
+package com.orchlib.backend.composer
 
-import com.orchlib.backend.TestApplication
+import com.orchlib.backend.composer.persistence.ComposerRowMapper
+import com.orchlib.backend.composer.persistence.JdbcComposerRepository
+import com.orchlib.backend.composer.persistence.buildAddFailure
+import com.orchlib.backend.composer.persistence.buildAddSuccess
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
 import org.mockito.Mockito.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
@@ -16,14 +18,11 @@ import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit4.SpringRunner
 import java.lang.RuntimeException
 import java.sql.Date
 
-
 @ActiveProfiles("JdbcComposerRepositoryTest")
-@RunWith(SpringRunner::class)
-@SpringBootTest(classes = [TestApplication::class])
+@SpringBootTest
 class JdbcComposerRepositoryTest {
     private val composerDTO = ComposerDTO(
         last_name = "Mendelssohn",
@@ -123,7 +122,8 @@ class JdbcComposerRepositoryTest {
             val expected = buildAddSuccess(
                 composerDTO.last_name,
                 "composer",
-                numberOfRowsAffected)
+                numberOfRowsAffected
+            )
             assertThat(actual).isEqualTo(expected)
         }
 

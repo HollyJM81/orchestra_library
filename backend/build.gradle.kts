@@ -7,6 +7,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
     kotlin("jvm") version "1.4.21"
     kotlin("plugin.spring") version "1.4.21"
+    jacoco
 }
 
 group = "com.orchlib"
@@ -76,4 +77,12 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
 }
