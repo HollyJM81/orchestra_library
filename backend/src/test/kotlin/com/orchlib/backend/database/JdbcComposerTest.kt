@@ -10,7 +10,6 @@ import org.mockito.kotlin.whenever
 import org.springframework.jdbc.core.JdbcTemplate
 import java.lang.RuntimeException
 import java.sql.Date
-import kotlin.math.exp
 
 class JdbcComposerTest {
     private val composerDTO = ComposerDTO(
@@ -30,7 +29,31 @@ class JdbcComposerTest {
 
     @Nested
     inner class FindAll {
+        @Test
+        fun `find all composers returns results`() {
+            val composers: List<ComposerDTO> = listOf(
+                composerDTO,
+                ComposerDTO(
+                    last_name = "Schumann",
+                    first_name = "Clara",
+                    date_of_birth = Date.valueOf("1884-02-02")
+                )
+            )
+            whenever(
+                mockJdbcTemplate.query(
+                    "select * from Composer",
+                    composerRowMapper
+                )
+            ).thenReturn(composers)
+            val actual = jdbcComposerRepository.findAll()
+            assertEquals(composers, actual)
+        }
 
+        @Test
+        fun `find all composers returns empty list`() {
+            val actual = jdbcComposerRepository.findAll()
+            assertEquals(listOf<ComposerDTO>(), actual)
+        }
     }
 
     @Nested

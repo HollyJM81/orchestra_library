@@ -2,9 +2,8 @@ package com.orchlib.backend.database
 
 import org.springframework.jdbc.core.RowMapper
 import java.sql.Date
-import java.sql.SQLException
-
 import java.sql.ResultSet
+import java.sql.SQLException
 
 class ComposerRowMapper : RowMapper<ComposerDTO> {
     @Throws(SQLException::class)

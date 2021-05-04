@@ -9,12 +9,11 @@ class JdbcComposerRepository(
     private val composerRowMapper: ComposerRowMapper
 ) : ComposerRepository {
 
+    override fun findAll(): List<ComposerDTO> {
+        return jdbcTemplate.query("select * from Composer", composerRowMapper)
+    }
     override fun findOne(id: Int): ComposerDTO? {
-        return jdbcTemplate.queryForObject(
-            "select * from Composer where id=?",
-            composerRowMapper,
-            id
-        )
+        return jdbcTemplate.queryForObject("select * from Composer where id=?", composerRowMapper, id)
     }
 
     override fun save(composerDTO: ComposerDTO): DatabaseWriteResponse {
@@ -48,9 +47,5 @@ class JdbcComposerRepository(
             composerDTO.first_name,
             composerDTO.date_of_birth
         )
-    }
-
-    override fun findAll(): ComposerDTO {
-        TODO("Not yet implemented")
     }
 }
