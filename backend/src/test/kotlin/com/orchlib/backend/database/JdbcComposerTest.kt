@@ -24,7 +24,7 @@ class JdbcComposerTest {
     @BeforeEach
     fun setUp() {
         mockJdbcTemplate = mock()
-        jdbcComposerRepository = JdbcComposerRepository(mockJdbcTemplate, composerRowMapper)
+//        jdbcComposerRepository = JdbcComposerRepository(mockJdbcTemplate, composerRowMapper)
     }
 
     @Nested
@@ -111,7 +111,7 @@ class JdbcComposerTest {
                 )
             ).thenThrow(RuntimeException("message"))
             val actual = jdbcComposerRepository.save(composerDTO)
-            val expected = buildAddFailure(composerDTO.last_name, "composer")
+            val expected = buildAddFailure(composerDTO.last_name, "composer", null)
             assertEquals(expected, actual)
         }
     }

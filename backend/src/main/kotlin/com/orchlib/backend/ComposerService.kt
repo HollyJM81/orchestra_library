@@ -3,25 +3,15 @@ package com.orchlib.backend
 import com.orchlib.backend.database.ComposerDTO
 import com.orchlib.backend.database.DatabaseWriteResponse
 import com.orchlib.backend.database.JdbcComposerRepository
-import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.datasource.DriverManagerDataSource
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
-class ComposerService(
-    private val composerDAO: JdbcComposerRepository,
-    private val jdbcTemplate: JdbcTemplate
-) {
-    fun add(composer: ComposerDTO): DatabaseWriteResponse {
-        setDataSourceHackily()
-        return composerDAO.save(composer)
-    }
+@Service
+class ComposerService {
+    @Autowired
+    private lateinit var jdbcComposerRepository: JdbcComposerRepository
 
-    private fun setDataSourceHackily() {
-        val dataSource = DriverManagerDataSource()
-        dataSource.setDriverClassName("org.postgresql.Driver")
-        dataSource.url = "jdbc:postgresql://localhost:5432/paulamuldoon"
-        dataSource.username = "dev"
-        dataSource.password = "dev_database_password"
-
-        jdbcTemplate.dataSource = dataSource
+    fun save(composer: ComposerDTO): DatabaseWriteResponse {
+        return jdbcComposerRepository.save(composer)
     }
 }

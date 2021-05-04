@@ -8,4 +8,10 @@ data class SaveFailure(val message: String) : DatabaseWriteResponse
 
 fun buildAddSuccess(numberOfRowsAffected: Int) = SaveSuccess("Inserted $numberOfRowsAffected into composer table.")
 
-fun buildAddFailure(data: String, table: String) = SaveFailure("Error inserting $data into $table table.")
+fun buildAddFailure(data: String, table: String, exceptionMessage: String?): SaveFailure {
+    return if (exceptionMessage == null) {
+        SaveFailure("Error inserting $data into $table table.")
+    } else {
+        SaveFailure("Error inserting $data into $table table. $exceptionMessage")
+    }
+}

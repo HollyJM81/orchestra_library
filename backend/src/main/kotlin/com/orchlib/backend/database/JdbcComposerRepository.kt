@@ -1,13 +1,15 @@
 package com.orchlib.backend.database
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
 @Repository
-class JdbcComposerRepository(
-    private val jdbcTemplate: JdbcTemplate,
-    private val composerRowMapper: ComposerRowMapper
-) : ComposerRepository {
+class JdbcComposerRepository : ComposerRepository {
+    @Autowired
+    private lateinit var jdbcTemplate: JdbcTemplate
+    @Autowired
+    private lateinit var composerRowMapper: ComposerRowMapper
 
     override fun findAll(): List<ComposerDTO> {
         return jdbcTemplate.query("select * from Composer", composerRowMapper)
@@ -21,7 +23,7 @@ class JdbcComposerRepository(
             createComposerTableIfNotExists()
             insertComposer(composerDTO)
         } catch (exception: Exception) {
-            return buildAddFailure(composerDTO.last_name, "composer")
+            return buildAddFailure(composerDTO.last_name, "composer", exception.message)
         }
         return buildAddSuccess(numberOfRowsAffected)
     }
