@@ -14,7 +14,7 @@ class JdbcComposerRepository : ComposerRepository {
     override fun findAll(): List<ComposerDTO> {
         return jdbcTemplate.query("select * from Composer", composerRowMapper)
     }
-    override fun findOne(id: Int): ComposerDTO? {
+    override fun findById(id: Int): ComposerDTO? {
         return jdbcTemplate.queryForObject("select * from Composer where id=?", composerRowMapper, id)
     }
 
@@ -25,7 +25,11 @@ class JdbcComposerRepository : ComposerRepository {
         } catch (exception: Exception) {
             return buildAddFailure(composerDTO.last_name, "composer", exception.message)
         }
-        return buildAddSuccess(numberOfRowsAffected)
+        return buildAddSuccess(
+            composerDTO.last_name,
+            "composer",
+            numberOfRowsAffected
+        )
     }
 
     private fun createComposerTableIfNotExists() {

@@ -3,8 +3,8 @@ package com.orchlib.backend
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.orchlib.backend.database.ComposerDTO
 import com.orchlib.backend.database.DatabaseWriteResponse
-import com.orchlib.backend.database.JdbcComposerRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,8 +24,8 @@ class ComposerController {
 
     @GetMapping
     @RequestMapping("$apiV1Root/composers")
-    fun composers(): String? {
-        return "Here are our composers"
+    fun getComposers(): ResponseEntity<ComposerResponse> {
+        return buildResponseEntity(ComposerResponse(composerService.findAll()))
     }
 
     @PostMapping(

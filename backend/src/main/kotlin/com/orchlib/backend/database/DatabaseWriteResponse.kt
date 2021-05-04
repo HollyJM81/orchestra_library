@@ -6,7 +6,13 @@ data class SaveSuccess(val message: String) : DatabaseWriteResponse
 
 data class SaveFailure(val message: String) : DatabaseWriteResponse
 
-fun buildAddSuccess(numberOfRowsAffected: Int) = SaveSuccess("Inserted $numberOfRowsAffected into composer table.")
+fun buildAddSuccess(
+    data: String,
+    table: String,
+    numberOfRowsAffected: Int
+): SaveSuccess {
+    return SaveSuccess("Inserted $data into $table table. Rows affected: $numberOfRowsAffected.")
+}
 
 fun buildAddFailure(data: String, table: String, exceptionMessage: String?): SaveFailure {
     return if (exceptionMessage == null) {

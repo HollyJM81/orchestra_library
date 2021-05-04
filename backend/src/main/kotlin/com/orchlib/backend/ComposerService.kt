@@ -11,6 +11,14 @@ class ComposerService {
     @Autowired
     private lateinit var jdbcComposerRepository: JdbcComposerRepository
 
+    fun findAll(): List<ComposerDTO> {
+        return jdbcComposerRepository.findAll()
+    }
+
+    fun findOne(id: Int): ComposerDTO? {
+        return jdbcComposerRepository.findById(id)
+    }
+
     fun save(composer: ComposerDTO): DatabaseWriteResponse {
         return jdbcComposerRepository.save(composer)
     }
