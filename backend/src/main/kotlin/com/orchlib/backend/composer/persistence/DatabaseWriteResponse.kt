@@ -15,9 +15,5 @@ fun buildAddSuccess(
 }
 
 fun buildAddFailure(data: String, table: String, exceptionMessage: String?): SaveFailure {
-    return if (exceptionMessage == null) {
-        SaveFailure("Error inserting $data into $table table.")
-    } else {
-        SaveFailure("Error inserting $data into $table table. $exceptionMessage")
-    }
+    return SaveFailure("Error inserting $data into $table table. $exceptionMessage")
 }
