@@ -12,17 +12,6 @@ import java.lang.Exception
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     /**
-     * This section defines the user accounts which can be used for
-     * authentication as well as the roles each user has.
-     */
-    @Throws(Exception::class)
-    public override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.inMemoryAuthentication()
-            .withUser("paula").password("musikverein").roles("USER", "ADMIN").and()
-            .withUser("holly").password("musikverein").roles("USER", "ADMIN")
-    }
-
-    /**
      * This section defines the security policy for the app.
      * - BASIC authentication is supported (enough for this REST-based demo)
      * - /composers is secured using URL security shown below
