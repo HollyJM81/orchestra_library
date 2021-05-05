@@ -21,7 +21,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "cd backend && ./gradlew ktlintcheck"
+      "pre-commit": "cd backend && ./gradlew ktlintformat"
     }
   }
 }
