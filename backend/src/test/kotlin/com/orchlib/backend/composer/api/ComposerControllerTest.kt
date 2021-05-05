@@ -1,6 +1,7 @@
-package com.orchlib.backend.composer
+package com.orchlib.backend.composer.api
 
 import com.orchlib.backend.ComposerService
+import com.orchlib.backend.composer.ComposerDTO
 import com.orchlib.backend.composer.persistence.buildAddSuccess
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested

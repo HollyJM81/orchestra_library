@@ -1,14 +1,8 @@
-package com.orchlib.backend.composer
+package com.orchlib.backend.composer.api
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.orchlib.backend.ComposerService
-import com.orchlib.backend.composer.responses.ComposerGetResponse
-import com.orchlib.backend.composer.responses.ComposerGetSuccessResponse
-import com.orchlib.backend.composer.responses.ComposerPostFailureResponse
-import com.orchlib.backend.composer.responses.ComposerPostResponse
-import com.orchlib.backend.composer.responses.ComposerPostSuccessResponse
-import com.orchlib.backend.composer.responses.buildComposerGetSuccessResponseEntity
-import com.orchlib.backend.composer.responses.buildComposerPostResponseEntity
+import com.orchlib.backend.composer.ComposerDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -31,8 +25,11 @@ class ComposerController {
 
     @GetMapping
     @RequestMapping("$apiV1Root/composers")
-    fun getComposers(): ResponseEntity<ComposerGetResponse> {
-        return buildComposerGetSuccessResponseEntity(ComposerGetSuccessResponse(composerService.findAll()))
+    fun getComposers(): ResponseEntity<ComposerResponse> {
+        return buildComposerResponseEntity(
+            ComposerGetSuccessResponse(composerService.findAll()),
+            HttpStatus.OK
+        )
     }
 
     @PostMapping(
@@ -40,7 +37,7 @@ class ComposerController {
         consumes = ["application/json"],
         produces = ["application/json"]
     )
-    fun saveComposer(@RequestBody composer: String): ResponseEntity<ComposerPostResponse> {
+    fun saveComposer(@RequestBody composer: String): ResponseEntity<ComposerResponse> {
         val composerResponse = try {
             ComposerPostSuccessResponse(composerService.save(toComposerDTO(composer)))
         } catch (exception: Exception) {
@@ -48,9 +45,9 @@ class ComposerController {
         }
 
         return when (composerResponse) {
-            is ComposerPostSuccessResponse -> buildComposerPostResponseEntity(composerResponse, HttpStatus.CREATED)
+            is ComposerPostSuccessResponse -> buildComposerResponseEntity(composerResponse, HttpStatus.CREATED)
             else ->
-                buildComposerPostResponseEntity(composerResponse, HttpStatus.BAD_REQUEST)
+                buildComposerResponseEntity(composerResponse, HttpStatus.BAD_REQUEST)
         }
     }
 }
