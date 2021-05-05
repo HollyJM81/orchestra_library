@@ -11,6 +11,7 @@ import java.lang.Exception
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     /**
+     * minor change to trigger fresh build
      * This section defines the security policy for the app.
      * - BASIC authentication is supported (enough for this REST-based demo)
      * - /composers is secured using URL security shown below
